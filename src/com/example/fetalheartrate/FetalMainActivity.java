@@ -14,6 +14,7 @@ import phfi.fetal.fetal_doppler.GaussianFilter;
 import phfi.fetal.fetal_doppler.Hilbert_Transform;
 import FFT_Classes.DSP;
 import android.app.Activity;
+import android.content.IntentFilter;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -73,6 +74,7 @@ public MediaRecorder recorder;
 public String dateNew;
 public Date date;
 public List<Float> values;
+public AudioBroadcast audioBroadcast;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -85,6 +87,9 @@ public List<Float> values;
 		recorder = new MediaRecorder();
 		date =  new Date();
 		dateNew =   Long.toString(date.getTime());
+		audioBroadcast = new AudioBroadcast();
+		
+		registerReceiver(audioBroadcast, new IntentFilter("android.intent.action.HEADSET_PLUG"));
 		recordAndStore();
 	}
 
